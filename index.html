@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <div class="menu">
+    <nav class="menu">
         <ul>
             <li><a href="#personal">Особисті дані</a></li>
             <li><a href="#experience">Досвід</a></li>
@@ -15,58 +15,91 @@
             <li><a href="#portfolio">Портфоліо</a></li>
             <li><a href="#contacts">Контакти</a></li>
         </ul>
-    </div>
+    </nav>
 
-    <div class="container">
-        <div class="left" id="personal">
-            <div class="avatar">
-                <img src="author.jpg" alt="Артем Шулятицький"> 
-            </div>
+    <!-- Основний контент сторінки-->
+    <main class="container">
+        <header class="left" id="personal">
+            <figure class="avatar">
+                <img src="author.jpg" alt="Артем Шулятицький">
+            </figure>
             <h1>Артем Шулятицький</h1>
-        </div>
+        </header>
 
-        <div class="right">         
-           
+        <div class="right">
 
-            <h2 id="education">Освіта</h2>
-            <p>Студент, спеціальність «Інженерія програмного забезпечення»</p>
+            <section id="experience">
+                <h2>Досвід</h2>
+                <p>Досвід роботи наразі відсутній (студент).</p>
+            </section>
 
-            <h2>Ключові навички</h2>
-            <ul>
-                <li>Мови програмування <ul><li>Python</li></ul></li>
-                <li>Веб-технології <ul><li>HTML</li><li>CSS</li></ul></li>
-            </ul>
+            <!-- Освіта -->
+            <section id="education">
+                <h2>Освіта</h2>
+                <p>Студент, спеціальність «Інженерія програмного забезпечення»</p>
+            </section>
 
-            <h2>Інтереси</h2>
-            <ul>
-                <li>Програмування</li>
-                <li>HTML</li>
-            </ul>
+            <section>
+                <h2>Ключові навички</h2>
+                <ul>
+                    <li>
+                        Мови програмування
+                        <ul><li>Python</li></ul>
+                    </li>
+                    <li>
+                        Веб-технології
+                        <ul><li>HTML</li><li>CSS</li></ul>
+                    </li>
+                </ul>
+            </section>
 
-            <h2>Мови</h2>
-            <ul>
-                <li>Англійська — добре</li>
-                <li>Українська — рідна</li>
-            </ul>
+            <section>
+                <h2>Інтереси</h2>
+                <ul>
+                    <li>Програмування</li>
+                    <li>HTML</li>
+                </ul>
+            </section>
 
-            <h2 id="contacts">Контакти</h2>
-            <p>+38 077 777-77-77<br>artem@shulyatitsky.com<br>Iвано-Франкiвськ</p>
-            <h2 id="portfolio">Портфоліо</h2>
-            <div class="portfolio-buttons">
-                <a href="#" class="btn">Лабораторна №2 — Резюме</a>
-                <a href="#" class="btn">Лабораторна №3 — GitHub Pages</a>
-            </div>
+            <section>
+                <h2>Мови</h2>
+                <ul>
+                    <li>Англійська — добре</li>
+                    <li>Українська — рідна</li>
+                </ul>
+            </section>
 
-            <h2>Базова структура HTML (entities)</h2>
-            <pre>
+            <!--Контакти-->
+            <section id="contacts">
+                <h2>Контакти</h2>
+                <address>
+                    +38 077 777-77-77<br>
+                    artem@shulyatitsky.com<br>
+                    Івано-Франківськ
+                </address>
+            </section>
+
+            <section id="portfolio">
+                <h2>Портфоліо</h2>
+                <div class="portfolio-buttons">
+                    <a href="#" class="btn">Лабораторна №2 — Резюме</a>
+                    <a href="#" class="btn">Лабораторна №3 — GitHub Pages</a>
+                </div>
+            </section>
+
+            <section>
+                <h2>Базова структура HTML (entities)</h2>
+                <pre>
 &amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html&amp;gt;
 &amp;lt;head&amp;gt;...&amp;lt;/head&amp;gt;
 &amp;lt;body&amp;gt;...&amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
-        </pre>
+                </pre>
+            </section>
+
         </div>
-    </div>
+    </main>
 
 </body>
 </html>
