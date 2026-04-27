@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геометричні фігури на CSS — Концентричні кола (task_box_model.png)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Roboto+Mono&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 40px 20px;
+            color: #1e2937;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+        
+        h2 {
+            color: #0f172a;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3b82f6;
+            display: inline-block;
+        }
+        
+        .shape-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 340px;
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: #3b82f6;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            letter-spacing: 0.5px;
+        }
+        
+        /* ===box-shadow === */
+        #variant1 {
+            width: 100px;
+            height: 100px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 0 50px #ffff00,
+                0 0 0 100px #0066ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: #000000;
+            font-family: 'Inter', system-ui, sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* === radial-gradient === */
+        #variant2 {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at center,
+                #ffffff 0% 33%,
+                #ffff00 33% 67%,
+                #0066ff 67% 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            font-weight: 800;
+            color: #000000;
+            font-family: 'Inter', system-ui, sans-serif;
+            box-shadow: 0 0 0 8px #e2e8f0;
+        }
+        
+        /* === два псевдоелементи === */
+        #variant3 {
+            width: 300px;
+            height: 300px;
+            background-color: #0066ff;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 0 8px #e2e8f0;
+        }
+        
+        #variant3::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background-color: #ffff00;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        #variant3::after {
+            content: "ША";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: #000000;
+            font-family: 'Inter', system-ui, sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .method-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+        
+        .method-badge::before {
+            content: "●";
+            color: #22c55e;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .code-hint {
+            font-family: 'Roboto Mono', monospace;
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-top: 25px;
+            overflow-x: auto;
+        }
+        
+        .footer-note {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .shape-label {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Концентричні кола</h1>
+        <p class="subtitle">
+            Верстка фігури з <strong>task_box_model.png</strong> (ініціали <strong>ША</strong>)<br>
+            Мінімум двома способами + 1 обов'язковий варіант з одночасним використанням двох псевдоелементів.<br>
+            <strong>Для кожного способу — лише один елемент &lt;div&gt;</strong>
+        </p>
+
+        <!-- СПОСІБ 1: box-shadow -->
+        <div class="section">
+            <div class="method-badge">— box-shadow</div>
+            <h2>1. Кілька тіней box-shadow (без псевдоелементів)</h2>
+            <p style="color:#475569; max-width:620px;">
+                Центральний елемент — біле коло з текстом. 
+                Дві зовнішні тіні створюють жовте та синє кільця. 
+                Чудово підходить для простих концентричних фігур.
+            </p>
+            
+            <div class="shape-wrapper">
+                <div class="label">box-shadow</div>
+                <div id="variant1">ША</div>
+            </div>
+            
+            <div class="shape-label">Розмір: 300 × 300 px (з тінню)</div>
+            
+            <div class="code-hint">
+                width: 100px; height: 100px;<br>
+                background: #fff; border-radius: 50%;<br>
+                box-shadow: 0 0 0 50px #ffff00,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 0 0 100px #0066ff;
+            </div>
+        </div>
+
+        <!-- radial-gradient -->
+        <div class="section">
+            <div class="method-badge">— radial-gradient</div>
+            <h2>2. Радіальний градієнт (один фон, без псевдоелементів)</h2>
+            <p style="color:#475569; max-width:620px;">
+                Один елемент + background: radial-gradient() з чіткими стопами кольорів. 
+                Найкомпактніший спосіб для концентричних кілець.
+            </p>
+            
+            <div class="shape-wrapper">
+                <div class="label">radial-gradient</div>
+                <div id="variant2">ША</div>
+            </div>
+            
+            <div class="shape-label">Розмір: 300 × 300 px</div>
+            
+            <div class="code-hint">
+                background: radial-gradient(<br>
+                &nbsp;&nbsp;circle at center,<br>
+                &nbsp;&nbsp;#ffffff 0% 33%,<br>
+                &nbsp;&nbsp;#ffff00 33% 67%,<br>
+                &nbsp;&nbsp;#0066ff 67% 100%<br>
+                );
+            </div>
+        </div>
+
+        <!-- два псевдоелементи -->
+        <div class="section">
+            <div class="method-badge" style="background:#fef3c7; color:#92400e;">— ::before + ::after</div>
+            <h2>3. Два псевдоелементи одночасно (::before та ::after)</h2>
+            <p style="color:#475569; max-width:620px;">
+                <strong>Обов'язковий варіант</strong> за завданням. 
+                Зовнішній div — синє коло.<br>
+                ::before — жовте коло всередині.<br>
+                ::after — біле коло з текстом «ША» (центроване через flex).
+            </p>
+            
+            <div class="shape-wrapper">
+                <div class="label">::before + ::after</div>
+                <div id="variant3"></div>
+            </div>
+            
+            <div class="shape-label">Розмір: 300 × 300 px</div>
+            
+            <div class="code-hint">
+                #variant3 { background: #0066ff; border-radius: 50%; position: relative; }<br><br>
+                #variant3::before {<br>
+                &nbsp;&nbsp;content: ""; width: 200px; height: 200px;<br>
+                &nbsp;&nbsp;background: #ffff00; border-radius: 50%;<br>
+                &nbsp;&nbsp;position: absolute; top:50%; left:50%;<br>
+                &nbsp;&nbsp;transform: translate(-50%, -50%);<br>
+                }<br><br>
+                #variant3::after {<br>
+                &nbsp;&nbsp;content: "ША"; width: 120px; height: 120px;<br>
+                &nbsp;&nbsp;background: #fff; border-radius: 50%;<br>
+                &nbsp;&nbsp;... + flex + font styles<br>
+                }
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>✅ Всі варіанти використовують <strong>тільки один елемент &lt;div&gt;</strong> на спосіб.<br>
+            Кольори підібрані близько до оригіналу task_box_model.png.<br>
+            Додатково вивчено приклади з PDF «Геометричні фігури на CSS» (кола, border-radius, transform, ::before/::after, box-shadow).</p>
+        </div>
+    </div>
+</body>
+</html>

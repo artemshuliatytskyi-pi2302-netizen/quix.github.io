@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог квадрокоптерів | Лабораторна робота з HTML</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap');
+        
+        :root {
+            --primary: #0ea5e9;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .badge {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+        }
+        
+        .price-old {
+            position: relative;
+        }
+        
+        .price-old::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: #9ca3af;
+            transform: rotate(-8deg);
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, #0ea5e9 0%, #0284c8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .drone-img {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .product-card:hover .drone-img {
+            transform: scale(1.08);
+        }
+        
+        .nav-active {
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50">
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-zinc-200 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-2">
+                    <div class="w-11 h-11 bg-sky-600 rounded-2xl flex items-center justify-center shadow-inner">
+                        <i class="fa-solid fa-drone text-white text-3xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-black text-3xl tracking-tighter text-zinc-900">DRONE</span>
+                        <span class="font-bold text-sky-600 text-3xl tracking-tighter">UA</span>
+                    </div>
+                </div>
+                <div class="hidden md:block text-xs px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full font-mono">ЛАБОРАТОРНА #3</div>
+            </div>
+            
+            <div class="flex items-center gap-x-8 text-sm">
+                <a href="#catalog" class="font-medium text-zinc-600 hover:text-zinc-900 transition-colors">Каталог</a>
+                <a href="https://rozetka.com.ua/ua/quadrocopters/c1124685/" target="_blank" rel="noopener noreferrer" 
+                   class="font-medium text-zinc-600 hover:text-sky-600 transition-colors flex items-center gap-x-1.5">
+                    <span>Всі моделі</span> 
+                    <i class="fa-solid fa-external-link-alt text-xs"></i>
+                </a>
+                <a href="https://www.dji.com/" target="_blank" rel="noopener noreferrer"
+                   class="font-medium text-zinc-600 hover:text-sky-600 transition-colors flex items-center gap-x-1.5">
+                    <span>DJI офіційно</span> 
+                    <i class="fa-solid fa-external-link-alt text-xs"></i>
+                </a>
+            </div>
+            
+            <div class="flex items-center gap-x-4">
+                <div onclick="showCart()" 
+                     class="flex items-center gap-x-2 bg-white border border-zinc-200 hover:border-sky-300 transition-colors px-4 py-2 rounded-3xl cursor-pointer shadow-sm">
+                    <div class="relative">
+                        <i class="fa-solid fa-shopping-cart text-xl text-zinc-700"></i>
+                        <div id="cart-count" 
+                             class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</div>
+                    </div>
+                    <span class="font-semibold text-sm text-zinc-700">Кошик</span>
+                </div>
+                
+                <div class="w-9 h-9 bg-zinc-200 rounded-full overflow-hidden ring-2 ring-white">
+                    <img src="https://picsum.photos/id/64/36/36" alt="Аватар користувача" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto px-8 pt-10 pb-6">
+        <div class="flex flex-col items-center text-center">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 bg-sky-100 text-sky-700 rounded-3xl text-xs font-bold tracking-[1.5px] mb-4">
+                <i class="fa-solid fa-rocket"></i>
+                <span>ВАРІАНТ 16 • КВАДРОКОПТЕРИ</span>
+            </div>
+            
+            <h1 class="text-6xl font-black tracking-tighter text-zinc-900 mb-3">ОБОВ'ЯЗКОВО ДОДАЙТЕ СВОЄ ЗАМОВЛЕННЯ</h1>
+            <p class="max-w-md text-lg text-zinc-500">Оберіть найкращий квадрокоптер для себе. Реальні посилання на офіційні сторінки та магазини.</p>
+            
+            <div class="mt-6 flex items-center gap-x-3 text-sm">
+                <div class="flex -space-x-2">
+                    <div class="w-7 h-7 bg-zinc-300 rounded-full ring-2 ring-white overflow-hidden"><img src="https://picsum.photos/id/1011/28/28" alt=""></div>
+                    <div class="w-7 h-7 bg-zinc-300 rounded-full ring-2 ring-white overflow-hidden"><img src="https://picsum.photos/id/1005/28/28" alt=""></div>
+                    <div class="w-7 h-7 bg-zinc-300 rounded-full ring-2 ring-white overflow-hidden"><img src="https://picsum.photos/id/201/28/28" alt=""></div>
+                </div>
+                <span class="text-zinc-500 text-xs font-medium">Понад 1240 задоволених клієнтів цього місяця</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Catalog -->
+    <div id="catalog" class="max-w-screen-2xl mx-auto px-8 pb-16">
+        <div class="flex items-end justify-between mb-6 px-1">
+            <div>
+                <h2 class="text-3xl font-bold tracking-tight text-zinc-900">Рекомендовані моделі</h2>
+                <p class="text-zinc-500 text-sm mt-1">Актуальні ціни на 27 квітня 2026 • з урахуванням акцій</p>
+            </div>
+            
+            <a href="https://rozetka.com.ua/ua/quadrocopters/c1124685/" 
+               target="_blank" rel="noopener noreferrer"
+               class="group flex items-center gap-x-2 text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors">
+                <span>Переглянути весь каталог</span>
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-0.5 transition-transform"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="product-card bg-white rounded-3xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col relative">
+                <div class="absolute top-4 left-4 z-10">
+                    <div class="badge bg-emerald-500 text-white font-bold flex items-center gap-x-1.5 shadow-md">
+                        <i class="fa-solid fa-star text-xs"></i>
+                        <span>НОВИНКА</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pt-5 pb-3">
+                    <div class="text-[10px] font-mono tracking-[1px] text-emerald-600/70 font-semibold">ПРОФЕСІЙНИЙ</div>
+                    
+                    <!-- Image -->
+                    <a href="https://rozetka.com.ua/402320781/p402320781/" target="_blank" rel="noopener noreferrer" class="block mt-3">
+                        <div class="relative h-52 bg-zinc-100 rounded-2xl overflow-hidden ring-1 ring-zinc-200/70">
+                            <img src="https://picsum.photos/seed/mini4pro/600/420" 
+                                 alt="Квадрокоптер DJI Mini 4 Pro — компактний дрон з 360° уникненням перешкод та 4K камерою" 
+                                 class="drone-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10"></div>
+                        </div>
+                    </a>
+                    
+                    <!-- Title -->
+                    <a href="https://rozetka.com.ua/402320781/p402320781/" target="_blank" rel="noopener noreferrer"
+                       class="mt-4 block text-[15px] leading-tight font-semibold text-zinc-900 hover:text-sky-600 transition-colors line-clamp-2">
+                        DJI Mini 4 Pro
+                    </a>
+                    <div class="text-[11px] text-zinc-400 mt-0.5">з RC 2 пультом • 2025 модель</div>
+                    
+                    <!-- Price -->
+                    <div class="mt-4 flex items-baseline gap-x-2">
+                        <span class="text-4xl font-extrabold tracking-tighter text-zinc-900">52 449</span>
+                        <span class="text-sm font-semibold text-zinc-500">грн</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pb-5 mt-auto">
+                    <button onclick="addToCart(this, 'DJI Mini 4 Pro', 52449)" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 transition-all text-zinc-950 font-extrabold py-[13px] text-sm rounded-2xl flex items-center justify-center gap-x-2 shadow-sm">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>У КОШИК</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-3xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col relative">
+                <div class="absolute top-4 right-4 z-10">
+                    <div class="badge bg-blue-600 text-white font-bold flex items-center gap-x-1.5 shadow-md">
+                        <i class="fa-solid fa-fire text-xs"></i>
+                        <span>ХІТ ПРОДАЖІВ</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pt-5 pb-3">
+                    <div class="text-[10px] font-mono tracking-[1px] text-blue-600/70 font-semibold">ПОЧАТКІВЕЦЬ</div>
+                    
+                    <a href="https://rozetka.com.ua/451444607/p451444607/" target="_blank" rel="noopener noreferrer" class="block mt-3">
+                        <div class="relative h-52 bg-zinc-100 rounded-2xl overflow-hidden ring-1 ring-zinc-200/70">
+                            <img src="https://picsum.photos/seed/djineo/600/420" 
+                                 alt="DJI Neo — ультракомпактний дрон з керуванням жестами та 4K відео" 
+                                 class="drone-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://rozetka.com.ua/451444607/p451444607/" target="_blank" rel="noopener noreferrer"
+                       class="mt-4 block text-[15px] leading-tight font-semibold text-zinc-900 hover:text-sky-600 transition-colors line-clamp-2">
+                        DJI Neo
+                    </a>
+                    <div class="text-[11px] text-zinc-400 mt-0.5">Fly More Combo • 22 ГБ пам'яті</div>
+                    
+                    <div class="mt-4 flex items-baseline gap-x-2">
+                        <span class="price-old text-lg font-semibold text-zinc-400">26 395</span>
+                        <span class="text-4xl font-extrabold tracking-tighter text-emerald-600">21 695</span>
+                        <span class="text-sm font-semibold text-emerald-600">грн</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pb-5 mt-auto">
+                    <button onclick="addToCart(this, 'DJI Neo', 21695)" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 transition-all text-zinc-950 font-extrabold py-[13px] text-sm rounded-2xl flex items-center justify-center gap-x-2 shadow-sm">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>У КОШИК</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-3xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col relative">
+                <div class="absolute top-4 right-4 z-10">
+                    <div class="badge bg-blue-600 text-white font-bold flex items-center gap-x-1.5 shadow-md">
+                        <i class="fa-solid fa-fire text-xs"></i>
+                        <span>ХІТ ПРОДАЖІВ</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pt-5 pb-3">
+                    <div class="text-[10px] font-mono tracking-[1px] text-blue-600/70 font-semibold">УНІВЕРСАЛЬНИЙ</div>
+                    
+                    <a href="https://rozetka.com.ua/ua/dji-cpfp0000027101/p563943603/" target="_blank" rel="noopener noreferrer" class="block mt-3">
+                        <div class="relative h-52 bg-zinc-100 rounded-2xl overflow-hidden ring-1 ring-zinc-200/70">
+                            <img src="https://picsum.photos/seed/neo2/600/420" 
+                                 alt="DJI Neo 2 Fly More Combo — наступне покоління з покращеною стабілізацією та ActiveTrack" 
+                                 class="drone-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://rozetka.com.ua/ua/dji-cpfp0000027101/p563943603/" target="_blank" rel="noopener noreferrer"
+                       class="mt-4 block text-[15px] leading-tight font-semibold text-zinc-900 hover:text-sky-600 transition-colors line-clamp-2">
+                        DJI Neo 2 Fly More Combo
+                    </a>
+                    <div class="text-[11px] text-zinc-400 mt-0.5">з 3 акумуляторами • Motion control</div>
+                    
+                    <div class="mt-4 flex items-baseline gap-x-2">
+                        <span class="text-4xl font-extrabold tracking-tighter text-zinc-900">19 557</span>
+                        <span class="text-sm font-semibold text-zinc-500">грн</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pb-5 mt-auto">
+                    <button onclick="addToCart(this, 'DJI Neo 2 Fly More Combo', 19557)" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 transition-all text-zinc-950 font-extrabold py-[13px] text-sm rounded-2xl flex items-center justify-center gap-x-2 shadow-sm">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>У КОШИК</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-3xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col relative">
+                <div class="absolute top-4 right-4 z-10">
+                    <div class="badge bg-blue-600 text-white font-bold flex items-center gap-x-1.5 shadow-md">
+                        <i class="fa-solid fa-fire text-xs"></i>
+                        <span>ХІТ ПРОДАЖІВ</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pt-5 pb-3">
+                    <div class="text-[10px] font-mono tracking-[1px] text-blue-600/70 font-semibold">ПРЕМІУМ</div>
+                    
+                    <a href="https://rozetka.com.ua/ua/415234923/p415234923/" target="_blank" rel="noopener noreferrer" class="block mt-3">
+                        <div class="relative h-52 bg-zinc-100 rounded-2xl overflow-hidden ring-1 ring-zinc-200/70">
+                            <img src="https://picsum.photos/seed/mini4pro2/600/420" 
+                                 alt="DJI Mini 4 Pro RC2 — топова комплектація з покращеним пультом та додатковими аксесуарами" 
+                                 class="drone-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10"></div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://rozetka.com.ua/ua/415234923/p415234923/" target="_blank" rel="noopener noreferrer"
+                       class="mt-4 block text-[15px] leading-tight font-semibold text-zinc-900 hover:text-sky-600 transition-colors line-clamp-2">
+                        DJI Mini 4 Pro RC2
+                    </a>
+                    <div class="text-[11px] text-zinc-400 mt-0.5">Fly More Combo • 54 000 грн</div>
+                    
+                    <div class="mt-4 flex items-baseline gap-x-2">
+                        <span class="text-4xl font-extrabold tracking-tighter text-zinc-900">54 000</span>
+                        <span class="text-sm font-semibold text-zinc-500">грн</span>
+                    </div>
+                </div>
+                
+                <div class="px-5 pb-5 mt-auto">
+                    <button onclick="addToCart(this, 'DJI Mini 4 Pro RC2', 54000)" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 transition-all text-zinc-950 font-extrabold py-[13px] text-sm rounded-2xl flex items-center justify-center gap-x-2 shadow-sm">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>У КОШИК</span>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="bg-white border border-zinc-200 rounded-2xl p-4 flex gap-3 items-start">
+                <i class="fa-solid fa-shield-halved text-emerald-500 mt-0.5 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Гарантія 24 місяці</div>
+                    <div class="text-zinc-500">Офіційна від виробника та Rozetka</div>
+                </div>
+            </div>
+            <div class="bg-white border border-zinc-200 rounded-2xl p-4 flex gap-3 items-start">
+                <i class="fa-solid fa-truck text-sky-500 mt-0.5 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Безкоштовна доставка</div>
+                    <div class="text-zinc-500">Нова Пошта • від 3 днів</div>
+                </div>
+            </div>
+            <div class="bg-white border border-zinc-200 rounded-2xl p-4 flex gap-3 items-start">
+                <i class="fa-solid fa-headset text-amber-500 mt-0.5 text-xl"></i>
+                <div>
+                    <div class="font-semibold">Підтримка 24/7</div>
+                    <a href="mailto:support@droneua.com.ua?subject=Питання%20по%20квадрокоптерах" 
+                       class="text-sky-600 hover:underline">support@droneua.com.ua</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-zinc-900 text-zinc-400 py-10">
+        <div class="max-w-screen-2xl mx-auto px-8 text-xs grid md:grid-cols-2 gap-y-8">
+            <div>
+                <div class="font-mono text-[10px] tracking-[2px] mb-3 text-zinc-500">HTML: HYPERLINKS • URL • HTTP</div>
+                <div class="max-w-xs text-[13px] leading-relaxed">
+                    Усі посилання на товари ведуть на реальні сторінки магазинів та офіційні сайти виробників. 
+                    Використано <span class="font-semibold text-white">target="_blank" rel="noopener noreferrer"</span> 
+                    для безпечного відкриття в новій вкладці.
+                </div>
+            </div>
+            
+            <div class="md:text-right text-[11px] space-y-1">
+                <div>Приклад повного URL: <span class="font-mono text-emerald-400">https://rozetka.com.ua/402320781/p402320781/</span></div>
+                <div>Протокол: <span class="font-semibold">HTTPS</span> • Домен: rozetka.com.ua • Порт: 443 (за замовчуванням)</div>
+                <div class="pt-2">Виконано в рамках лабораторної роботи з HTML. Варіант 16 — Квадрокоптери.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#0ea5e9');
+        }
+        
+        let cart = [];
+        
+        function addToCart(buttonElement, productName, price) {
+            const originalText = buttonElement.innerHTML;
+            
+            cart.push({ name: productName, price: price, id: Date.now() });
+            updateCartCount();
+            
+            buttonElement.innerHTML = `
+                <i class="fa-solid fa-check"></i>
+                <span>ДОДАНО!</span>
+            `;
+            buttonElement.classList.remove('bg-yellow-400', 'hover:bg-yellow-500');
+            buttonElement.classList.add('bg-emerald-500', 'text-white', 'hover:bg-emerald-600');
+            
+            createConfetti(buttonElement);
+            
+            setTimeout(() => {
+                buttonElement.innerHTML = originalText;
+                buttonElement.classList.remove('bg-emerald-500', 'text-white', 'hover:bg-emerald-600');
+                buttonElement.classList.add('bg-yellow-400', 'hover:bg-yellow-500');
+            }, 1800);
+           
+            showToast(productName);
+        }
+        
+        function updateCartCount() {
+            const countEl = document.getElementById('cart-count');
+            countEl.textContent = cart.length;
+            
+            if (cart.length > 0) {
+                countEl.classList.add('animate-bounce');
+                setTimeout(() => countEl.classList.remove('animate-bounce'), 600);
+            }
+        }
+        
+        function showCart() {
+            if (cart.length === 0) {
+                alert('Ваш кошик порожній. Додайте квадрокоптери з каталогу!');
+                return;
+            }
+            
+            let total = 0;
+            let html = '<div class="text-left"><h3 class="font-bold text-xl mb-4">Ваш кошик</h3><div class="space-y-3">';
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="flex justify-between items-center bg-zinc-50 p-3 rounded-xl">
+                        <div>
+                            <div class="font-semibold">${item.name}</div>
+                            <div class="text-xs text-zinc-500">1 × ${item.price.toLocaleString('uk-UA')} грн</div>
+                        </div>
+                        <button onclick="removeFromCart(${index}, this)" class="text-red-400 hover:text-red-600 px-2">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += `</div>
+                <div class="border-t mt-4 pt-4 flex justify-between font-bold text-lg">
+                    <span>Всього:</span> 
+                    <span>${total.toLocaleString('uk-UA')} грн</span>
+                </div>
+                <div class="mt-6 flex gap-3">
+                    <button onclick="checkout()" class="flex-1 bg-emerald-600 text-white py-3 rounded-2xl font-bold">Оформити замовлення</button>
+                    <button onclick="clearCartAndClose(this)" class="px-6 border border-zinc-300 rounded-2xl font-medium">Очистити</button>
+                </div>
+                <p class="text-[10px] text-center mt-4 text-zinc-400">* Ціни актуальні на момент додавання. Доставка безкоштовна.</p>
+            </div>`;
+            
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[100]';
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-8 shadow-2xl relative" onclick="event.target === this && this.remove()">
+                    ${html}
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function removeFromCart(index, element) {
+            cart.splice(index, 1);
+            updateCartCount();
+            element.closest('.fixed').remove();
+            if (cart.length > 0) {
+                setTimeout(() => showCart(), 50);
+            }
+        }
+        
+        function clearCartAndClose(element) {
+            cart = [];
+            updateCartCount();
+            element.closest('.fixed').remove();
+        }
+        
+        function checkout() {
+            const modal = document.querySelector('.fixed.inset-0');
+            if (modal) modal.remove();
+            
+            const successModal = document.createElement('div');
+            successModal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[100]';
+            successModal.innerHTML = `
+                <div class="bg-white rounded-3xl max-w-sm w-full mx-4 p-9 text-center shadow-2xl">
+                    <div class="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-5">
+                        <i class="fa-solid fa-check text-emerald-600 text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Замовлення оформлено!</h3>
+                    <p class="mt-2 text-zinc-600">Дякуємо! Менеджер зв'яжеться з вами протягом 15 хвилин для підтвердження.</p>
+                    
+                    <div class="mt-8 text-xs bg-zinc-50 p-3 rounded-2xl text-left">
+                        <div class="flex justify-between"><span>Номер замовлення:</span> <span class="font-mono">#DR-${Date.now().toString().slice(-6)}</span></div>
+                        <div class="flex justify-between mt-1"><span>Статус:</span> <span class="text-emerald-600 font-medium">В обробці</span></div>
+                    </div>
+                    
+                    <button onclick="this.closest('.fixed').remove(); window.location.reload()" 
+                            class="mt-8 w-full bg-zinc-900 text-white py-3.5 rounded-2xl font-semibold">Повернутися на головну</button>
+                </div>
+            `;
+            document.body.appendChild(successModal);
+        }
+        
+        function createConfetti(element) {
+            const colors = ['#0ea5e9', '#eab308', '#22c55e'];
+            for (let i = 0; i < 12; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'absolute';
+                conf.style.width = '6px';
+                conf.style.height = '6px';
+                conf.style.borderRadius = '50%';
+                conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.left = Math.random() * 100 + '%';
+                conf.style.top = '-10px';
+                conf.style.zIndex = '20';
+                conf.style.pointerEvents = 'none';
+                element.parentElement.appendChild(conf);
+                
+                const duration = Math.random() * 800 + 600;
+                conf.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${120 + Math.random() * 40}px) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                }).onfinish = () => conf.remove();
+            }
+        }
+        
+        function showToast(productName) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 right-6 bg-zinc-900 text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-x-3 text-sm z-[200]';
+            toast.innerHTML = `
+                <i class="fa-solid fa-check-circle text-emerald-400"></i>
+                <span><strong>${productName}</strong> додано до кошика</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2200);
+        }
+        
+        function initializeKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '?' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    const firstBtn = document.querySelector('.product-card button');
+                    if (firstBtn) firstBtn.click();
+                }
+            });
+            
+            let keys = '';
+            document.addEventListener('keypress', function(e) {
+                keys += e.key.toLowerCase();
+                if (keys.length > 5) keys = keys.slice(-5);
+                if (keys === 'drone') {
+                    keys = '';
+                    const cards = document.querySelectorAll('.product-card');
+                    cards.forEach((card, i) => {
+                        setTimeout(() => {
+                            card.style.transform = 'rotate(2deg)';
+                            setTimeout(() => card.style.transform = '', 180);
+                        }, i * 80);
+                    });
+                }
+            });
+        }
+        
+        function init() {
+            initializeTailwind();
+            updateCartCount();
+            initializeKeyboardShortcuts();
+            
+            setTimeout(() => {
+                const count = document.getElementById('cart-count');
+                if (count && parseInt(count.textContent) === 0) {
+                    count.style.transition = 'all 0.4s';
+                }
+            }, 1500);
+            
+            console.log('%c[HTML Lab] Каталог квадрокоптерів завантажено. Всі гіперпосилання налаштовані коректно.', 'color:#64748b');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>

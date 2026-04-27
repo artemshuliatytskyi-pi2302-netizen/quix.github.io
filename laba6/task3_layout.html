@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3: Верстка макету сторінки (block elements)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px 0;
+        }
+
+        .fullwrap {
+            width: 900px;
+            margin: 0 auto;
+            border: 4px solid #222222;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            height: 70px;
+            border: 3px solid #222222;
+            margin: 12px;
+            background-color: #e8e8e8;
+            position: relative;
+            display: block;
+        }
+
+        .header::before {
+            content: "header";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .wrap {
+            height: 420px;
+            border: 3px solid #222222;
+            margin: 12px;
+            position: relative;
+            overflow: hidden;
+            background-color: #fafafa;
+        }
+
+        .main {
+            width: 58%;
+            height: 100%;
+            border: 3px solid #222222;
+            float: left;
+            background-color: #f0f8ff;
+            position: relative;
+            padding: 15px;
+        }
+
+        .main::before {
+            content: "main";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .sidebar {
+            width: 42%;
+            height: 100%;
+            border: 3px solid #222222;
+            float: right;
+            background-color: #fff8dc;
+            position: relative;
+            padding: 15px;
+        }
+
+        .sidebar::before {
+            content: "sidebar";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .footer {
+            height: 70px;
+            border: 3px solid #222222;
+            margin: 12px;
+            background-color: #e8e8e8;
+            clear: both;
+            position: relative;
+            display: block;
+        }
+
+        .footer::before {
+            content: "footer";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .fullwrap-label {
+            position: absolute;
+            top: -25px;
+            right: 20px;
+            font-size: 13px;
+            color: #c00;
+            font-weight: bold;
+            background: #fff;
+            padding: 2px 8px;
+            border: 1px solid #c00;
+        }
+
+        .wrap-label {
+            position: absolute;
+            top: 50%;
+            right: -70px;
+            font-size: 13px;
+            color: #c00;
+            font-weight: bold;
+            background: #fff;
+            padding: 2px 8px;
+            border: 1px solid #c00;
+            transform: translateY(-50%);
+        }
+
+        .wrap::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="fullwrap">
+        <div class="header"></div>
+
+        <div class="wrap">
+            <div class="main"></div>
+            
+            <div class="sidebar"></div>
+        </div>
+
+        <div class="footer"></div>
+    </div>
+
+
+</body>
+</html>
